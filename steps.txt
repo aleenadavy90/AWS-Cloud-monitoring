@@ -20,6 +20,7 @@ To perform a simple test run without posting data to CloudWatch
 To collect all available memory metrics and send them to CloudWatch
 ./mon-put-instance-data.pl --mem-util --mem-used-incl-cache-buff --mem-used --mem-avail
 
+End
 Start editing crontab by going to cd /etc and vi crontab
 
 Add the following command to report memory and disk space utilization to CloudWatch every five minutes:
