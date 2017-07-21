@@ -1,0 +1,28 @@
+chmod 400 /Users/aleenadavy/Desktop/keypair/krypair.pem
+
+ssh -i "keypairpath" ec2-user@ec2-publi-ip.us-west-1.compute.amazonaws.com
+
+Run "yum update -y" as a su to apply all updates.
+
+yum install perl-Switch perl-DateTime perl-Sys-Syslog perl-LWP-Protocol-https -y- install packages
+
+Next mkdir /CloudWatch and go into the directory
+
+To download, install, and configure the monitoring scripts
+curl http://aws-cloudwatch.s3.amazonaws.com/downloads/CloudWatchMonitoringScripts-1.2.1.zip -O
+unzip CloudWatchMonitoringScripts-1.2.1.zip
+rm CloudWatchMonitoringScripts-1.2.1.zip
+cd aws-scripts-mon
+
+To perform a simple test run without posting data to CloudWatch
+./mon-put-instance-data.pl --mem-util --verify --verbose
+
+To collect all available memory metrics and send them to CloudWatch
+./mon-put-instance-data.pl --mem-util --mem-used-incl-cache-buff --mem-used --mem-avail
+
+Start editing crontab by going to cd /etc and vi crontab
+
+Add the following command to report memory and disk space utilization to CloudWatch every five minutes:
+*/5 * * * * ~/aws-scripts-mon/mon-put-instance-data.pl --mem-used-incl-cache-buff --mem-util --disk-space-util --disk-path=/ --from-cron
+
+After this go to AWS console and Check RAM utilisation metrics up in Cloudwatch for your Amazon Linux EC2 instance
